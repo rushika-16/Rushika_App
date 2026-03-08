@@ -1,0 +1,29 @@
+Credit Card Underwriting Policy (Approved)
+
+1) Minimum Eligibility Criteria
+- Applicant age must be above 18 and below 60 years.
+- Accepted employment categories: salaried, self-employed.
+- Minimum monthly income: 2000.
+- Minimum credit score: 600.
+
+2) Card Tier Assignment
+- Credit score 600-699 maps to Standard tier by score.
+- Credit score 700-799 maps to Premium tier by score.
+- Credit score 800+ maps to Elite tier by score.
+- Income >= 5000 maps to Premium tier by income.
+- Income >= 10000 maps to Elite tier by income.
+- Final tier is the more conservative (lower) tier between score-based and income-based tiers.
+
+3) Credit Limit Policy
+- Standard: 0.5 x monthly income.
+- Premium: 1.0 x monthly income.
+- Elite: 2.0 x monthly income.
+
+4) Decision Communication and Compliance
+- Offers communicated in this system are pre-qualified offers and are subject to identity and income verification.
+- The system must not present outcomes as guaranteed final approvals.
+- The system does not provide financial advisory services.
+
+5) Rejection Handling
+- Rejection reason must be explicit and tied to policy criteria.
+- Improvement suggestions must be compliant and must not include manipulative, fraudulent, or deceptive tactics.

@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: credit-card-ai-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.18
+      - key: DATABASE_URL
+        value: sqlite:////var/data/credit_card.db
+    disk:
+      name: credit-card-ai-data
+      mountPath: /var/data
+      sizeGB: 1
+
+  - type: web
+    name: credit-card-ai-frontend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run frontend/app.py --server.address 0.0.0.0 --server.port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.18
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: credit-card-ai-backend
+          property: url

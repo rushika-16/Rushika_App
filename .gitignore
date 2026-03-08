@@ -1,0 +1,13 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+
+credit_card.db
+backend/.chroma/
+
+.streamlit/
+.env
+.env.*
+
+.vscode/
