@@ -75,7 +75,7 @@ INELIGIBLE_PROFESSION_MESSAGE = (
 )
 
 SOFT_BUREAU_DISCLAIMER = (
-    "Disclaimer: We pull only your soft bureau score. This will not impact your actual bureau score."
+    "Disclaimer: We pull only your soft credit score. This will not impact your actual credit score."
 )
 
 # ---------------------------
@@ -764,15 +764,15 @@ if not st.session_state.offer:
                     if lookup_result.get("record_found"):
                         reply = (
                             f"Credit report fetched for SSN {visible_ssn}. "
-                            f"Your soft bureau score is {data['credit_score']}. "
-                            "This soft pull does not impact your actual bureau score. "
+                            f"Your soft credit score is {data['credit_score']}. "
+                            "This soft pull does not impact your actual credit score. "
                             "Could you please confirm your profession?"
                         )
                     else:
                         reply = (
                             f"No credit record found for SSN {visible_ssn}. "
                             f"Using fallback score {data['credit_score']} for pre-qualification. "
-                            "This soft pull does not impact your actual bureau score. "
+                            "This soft pull does not impact your actual credit score. "
                             "Could you please confirm your profession?"
                         )
                 else:
@@ -841,7 +841,7 @@ if not st.session_state.offer:
                     st.session_state.income_invalid_attempts = 0
                     reply = (
                         "Almost done! Please enter your 9-digit SSN (XXX-XX-XXXX or 9 digits). "
-                        "This is a soft bureau pull and will not impact your actual bureau score."
+                        "This is a soft credit pull and will not impact your actual credit score."
                     )
                 else:
                     st.session_state.income_invalid_attempts += 1
