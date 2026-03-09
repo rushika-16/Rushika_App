@@ -646,6 +646,9 @@ if not st.session_state.offer:
     data = st.session_state.user_data
 
     if step == "employment_type":
+        if data.get("ssn_masked"):
+            st.caption(SOFT_BUREAU_DISCLAIMER)
+
         profession_options = [
             "Select profession",
             "Salaried",
@@ -761,13 +764,15 @@ if not st.session_state.offer:
                     if lookup_result.get("record_found"):
                         reply = (
                             f"Credit report fetched for SSN {visible_ssn}. "
-                            f"Your bureau score is {data['credit_score']}. "
+                            f"Your soft bureau score is {data['credit_score']}. "
+                            "This soft pull does not impact your actual bureau score. "
                             "Could you please confirm your profession?"
                         )
                     else:
                         reply = (
                             f"No credit record found for SSN {visible_ssn}. "
                             f"Using fallback score {data['credit_score']} for pre-qualification. "
+                            "This soft pull does not impact your actual bureau score. "
                             "Could you please confirm your profession?"
                         )
                 else:
