@@ -4,9 +4,14 @@ services:
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.18
+      - key: LOG_LEVEL
+        value: INFO
+      - key: SQL_ECHO
+        value: "false"
       - key: DATABASE_URL
         value: sqlite:////var/data/credit_card.db
     disk:
@@ -19,9 +24,12 @@ services:
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: streamlit run frontend/app.py --server.address 0.0.0.0 --server.port $PORT
+    healthCheckPath: /
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.18
+      - key: BACKEND_TIMEOUT_SECONDS
+        value: "30"
       - key: BACKEND_URL
         fromService:
           type: web

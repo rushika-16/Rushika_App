@@ -1,4 +1,6 @@
 import re
+import os
+import logging
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
@@ -12,6 +14,9 @@ from backend.service import (
 )
 from backend.eligibility import evaluate_eligibility
 from backend.rag import build_structured_explanation
+
+logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO").upper())
+logger = logging.getLogger("credit_card_ai.backend")
 
 app = FastAPI()
 
@@ -84,6 +89,16 @@ def on_startup():
 def read_root():
     return {"message": "Credit Card AI Backend Running"}
 
+
+@app.get("/healthz")
+def healthz(session: Session = Depends(get_session)):
+    try:
+        session.exec(select(1)).one()
+        return {"status": "ok", "database": "ok"}
+    except Exception:
+        logger.exception("Health check failed")
+        raise HTTPException(status_code=503, detail="Service unavailable")
+
 @app.post("/start")
 def start_application(
     name: str = "Guest", 
@@ -129,10 +144,11 @@ def lookup_credit_score(payload: SSNLookupRequest):
         )
 
     lookup_result = get_credit_score_by_ssn(normalized_ssn)
-    print(
-        f"SSN lookup response: ssn={lookup_result['ssn_masked']}, "
-        f"score={lookup_result['credit_score']}, "
-        f"record_found={lookup_result['record_found']}"
+    logger.info(
+        "SSN lookup response: ssn=%s score=%s record_found=%s",
+        lookup_result["ssn_masked"],
+        lookup_result["credit_score"],
+        lookup_result["record_found"],
     )
     return lookup_result
 

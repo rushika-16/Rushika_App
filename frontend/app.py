@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import requests
 import re
+import os
 from datetime import datetime
 import html
 import json
@@ -11,7 +12,19 @@ try:
 except Exception:
     confetti = None
 
-BACKEND_URL = "http://127.0.0.1:8000"
+def _load_backend_timeout_seconds() -> float:
+    raw_timeout = os.getenv("BACKEND_TIMEOUT_SECONDS", "30").strip()
+    try:
+        parsed = float(raw_timeout)
+        if parsed > 0:
+            return parsed
+    except ValueError:
+        pass
+    return 30.0
+
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000").rstrip("/")
+BACKEND_TIMEOUT_SECONDS = _load_backend_timeout_seconds()
 
 # ---------------------------
 # SESSION STATE INIT
@@ -374,7 +387,7 @@ def generate_ai_explanation(application_id, query_text):
         response = requests.post(
             f"{BACKEND_URL}/explain-decision",
             params={"application_id": application_id, "user_query": query_text},
-            timeout=30,
+            timeout=BACKEND_TIMEOUT_SECONDS,
         )
         if response.ok:
             return response.json()
@@ -388,7 +401,7 @@ def fetch_credit_score_by_ssn(ssn: str) -> dict:
         response = requests.post(
             f"{BACKEND_URL}/lookup-credit-score",
             json={"ssn": ssn},
-            timeout=30,
+            timeout=BACKEND_TIMEOUT_SECONDS,
         )
         if response.ok:
             payload = response.json()
@@ -847,7 +860,7 @@ if st.session_state.step == "processing" and not st.session_state.offer:
             # 1. Start App
             start_resp = requests.post(f"{BACKEND_URL}/start", params={
                 "name": user_data["name"], "mobile": user_data["mobile"], "email": user_data["email"]
-            }, timeout=30)
+            }, timeout=BACKEND_TIMEOUT_SECONDS)
 
             if not start_resp.ok:
                 backend_detail = ""
@@ -876,7 +889,7 @@ if st.session_state.step == "processing" and not st.session_state.offer:
                 "credit_score": user_data["credit_score"],
                 "employment_type": user_data["employment_type"],
                 "ssn_masked": user_data.get("ssn_masked", "")
-            }, timeout=30)
+            }, timeout=BACKEND_TIMEOUT_SECONDS)
 
             if not submit_resp.ok:
                 if user_data.get("employment_type") in ["Retired", "Student", "Homemaker"]:
