@@ -710,7 +710,7 @@ if not st.session_state.offer:
                 "Please enter your 9-digit SSN (XXX-XX-XXXX or 9 digits).",
                 key="ssn_input_value",
                 type="default" if st.session_state.show_ssn_input else "password",
-                placeholder="123-45-6789",
+                placeholder="XXX-XX-XXXX",
             )
         with toggle_col:
             toggle_label = "🙈" if st.session_state.show_ssn_input else "👁️"

@@ -24,11 +24,11 @@ UI link: http://127.0.0.1:8501
 
 Use these sample inputs in chat:
 - Name: `Rushika Jain`
-- Mobile: `9876543210`
+- Mobile: `9XXXXXXXXX`
 - Email: `rush@test.com`
 - DOB: `1998-05-12`
 - Monthly Income: `75000`
-- SSN: `123-45-6789`
+- SSN: `XXX-XX-XXX`
 - Employment Type: `Salaried`
 
 Expected highlights:

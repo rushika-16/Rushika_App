@@ -72,7 +72,7 @@ Open:
 - Lookup endpoint: `POST /lookup-credit-score` with JSON body:
 
 ```json
-{ "ssn": "123-45-6789" }
+{ "ssn": "XXX-XX-XXX" }
 ```
 
 - Response includes masked SSN only (last 3 digits visible), e.g. `***-**-789`.
@@ -80,18 +80,18 @@ Open:
 
 ## Dummy SSN Mapping (Stub)
 
-| SSN | Score |
+| Masked SSN | Score |
 |---|---:|
-| 123-45-6789 | 850 |
-| 987-65-4321 | 825 |
-| 111-22-3333 | 810 |
-| 222-33-4444 | 780 |
-| 555-66-7777 | 745 |
-| 999-00-1111 | 590 |
-| 888-77-6666 | 550 |
-| 444-55-6666 | 520 |
-| 333-22-1111 | 680 |
-| 000-12-3456 | 350 |
+| ***-**-789 | 850 |
+| ***-**-321 | 825 |
+| ***-**-333 | 810 |
+| ***-**-444 | 780 |
+| ***-**-777 | 745 |
+| ***-**-111 | 590 |
+| ***-**-666 | 550 |
+| ***-**-666 | 520 |
+| ***-**-111 | 680 |
+| ***-**-456 | 350 |
 
 Fallback for unknown SSN: `600`.
 
@@ -117,3 +117,20 @@ Steps:
 Notes:
 - Frontend receives backend URL via `BACKEND_URL` from backend service URL.
 - Backend uses persistent disk path for SQLite via `DATABASE_URL=sqlite:////var/data/credit_card.db`.
+
+## Free Hosting Option (Hugging Face Spaces)
+
+If you are okay with sleeping apps/cold starts, you can host this for free on Hugging Face Spaces.
+
+### Steps
+
+1. Go to Hugging Face and create a new Space.
+2. Choose **SDK: Docker**.
+3. Connect this GitHub repo or push this project files into the Space repo.
+4. Build will use `Dockerfile` and run `start.sh`.
+5. Once built, the Space URL becomes your shareable link.
+
+### Notes
+
+- Free CPU Spaces may sleep when idle and take time to wake up.
+- Data stored in local SQLite is ephemeral on free tiers.
