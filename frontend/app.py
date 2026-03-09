@@ -74,7 +74,7 @@ INELIGIBLE_PROFESSION_MESSAGE = (
     "self-employed individuals. We truly appreciate your interest and hope to serve you in the future."
 )
 
-SOFT_BUREAU_DISCLAIMER = (
+SOFT_CREDIT_SCORE_DISCLAIMER = (
     "Disclaimer: We pull only your soft credit score. This will not impact your actual credit score."
 )
 
@@ -647,7 +647,7 @@ if not st.session_state.offer:
 
     if step == "employment_type":
         if data.get("ssn_masked"):
-            st.caption(SOFT_BUREAU_DISCLAIMER)
+            st.caption(SOFT_CREDIT_SCORE_DISCLAIMER)
 
         profession_options = [
             "Select profession",
@@ -724,7 +724,7 @@ if not st.session_state.offer:
             st.session_state.ssn_input_value = ""
             st.session_state.clear_ssn_input_on_next_render = False
 
-        st.caption(SOFT_BUREAU_DISCLAIMER)
+        st.caption(SOFT_CREDIT_SCORE_DISCLAIMER)
 
         input_col, toggle_col = st.columns([5, 1])
         with input_col:
