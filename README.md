@@ -1,3 +1,13 @@
+---
+title: Credit Card AI Assistant
+emoji: 💳
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # AI Credit Card Assistant
 
 Streamlit + FastAPI demo that provides credit card pre-qualification with:
