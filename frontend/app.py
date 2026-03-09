@@ -74,6 +74,10 @@ INELIGIBLE_PROFESSION_MESSAGE = (
     "self-employed individuals. We truly appreciate your interest and hope to serve you in the future."
 )
 
+SOFT_BUREAU_DISCLAIMER = (
+    "Disclaimer: We pull only your soft bureau score. This will not impact your actual bureau score."
+)
+
 # ---------------------------
 # VALIDATION FUNCTIONS
 # ---------------------------
@@ -717,6 +721,8 @@ if not st.session_state.offer:
             st.session_state.ssn_input_value = ""
             st.session_state.clear_ssn_input_on_next_render = False
 
+        st.caption(SOFT_BUREAU_DISCLAIMER)
+
         input_col, toggle_col = st.columns([5, 1])
         with input_col:
             ssn_input = st.text_input(
@@ -828,7 +834,10 @@ if not st.session_state.offer:
                     data["income"] = parsed_income
                     st.session_state.step = "ssn"
                     st.session_state.income_invalid_attempts = 0
-                    reply = "Almost done! Please enter your 9-digit SSN (XXX-XX-XXXX or 9 digits)."
+                    reply = (
+                        "Almost done! Please enter your 9-digit SSN (XXX-XX-XXXX or 9 digits). "
+                        "This is a soft bureau pull and will not impact your actual bureau score."
+                    )
                 else:
                     st.session_state.income_invalid_attempts += 1
                     if st.session_state.income_invalid_attempts == 1:
